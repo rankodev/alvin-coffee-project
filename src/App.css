@@ -1,0 +1,171 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+  background: #F5E9DA; /* Cream */
+  color: #3B2C1A; /* Dark Coffee Text */
+}
+.app-container {
+  max-width: 600px;
+  margin: 2em auto;
+  background: #EAD7C1; /* Latte */
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(75, 54, 33, 0.10);
+  padding: 2em;
+  border: 2px solid #CBB89D; /* Cappuccino */
+}
+h2 {
+  color: #8B6F4E; /* Coffee */
+}
+button, .button {
+  background: #CBB89D; /* Cappuccino */
+  color: #3B2C1A;
+  border: none;
+  border-radius: 8px;
+  padding: 0.7em 1.5em;
+  font-size: 1em;
+  margin: 0.5em 0;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  box-shadow: 0 2px 6px rgba(75, 54, 33, 0.08);
+}
+button:hover, .button:hover {
+  background: #D9A066; /* Caramel */
+  color: #4B3621;
+}
+button.continue-btn {
+  background: #D9A066; /* Caramel */
+  color: #3B2C1A;
+  font-size: 1.15em;
+  font-weight: bold;
+  padding: 1em 2.2em;
+  border-radius: 10px;
+  margin-top: 1em;
+  margin-bottom: 0.5em;
+  box-shadow: 0 3px 10px rgba(75, 54, 33, 0.10);
+  border: 2px solid #8B6F4E;
+  transition: background 0.2s, color 0.2s;
+}
+button.continue-btn:hover {
+  background: #EAD7C1;
+  color: #8B6F4E;
+}
+.final-page {
+  text-align: center;
+  background: #F5E9DA; /* Cream */
+  border-radius: 16px;
+  padding: 2em;
+  box-shadow: 0 2px 8px rgba(75, 54, 33, 0.06);
+  border: 1.5px solid #EAD7C1;
+}
+.timestamp-grid button.selected {
+  background: #8B6F4E; /* Coffee */
+  color: #fff;
+}
+.input, input, textarea {
+  border: 1.5px solid #CBB89D;
+  border-radius: 6px;
+  padding: 0.5em;
+  font-size: 1em;
+  margin: 0.5em 0;
+  background: #FFF;
+  color: #3B2C1A;
+}
+.order-summary {
+  background: #EAD7C1; /* Latte */
+  border-radius: 10px;
+  padding: 1em;
+  margin: 1em 0;
+  border: 1px solid #CBB89D;
+}
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+.coffee-type-page button.selected,
+.coffee-option-page button.selected,
+.milk-syrup-option-page button.selected {
+  background: #8B6F4E; /* Coffee */
+  color: #fff;
+  font-weight: bold;
+  border: 2px solid #D9A066; /* Caramel accent */
+}
+.welcome-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: #F5E9DA;
+  animation: slideInLeft 0.7s cubic-bezier(0.77,0,0.175,1);
+}
+
+.slide-in-main {
+  animation: slideInLeft 0.7s cubic-bezier(0.77,0,0.175,1);
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-60vw);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.coffee-type-page {
+  animation: slideInLeft 0.7s cubic-bezier(0.77,0,0.175,1);
+}
+.coffee-type-page button,
+.coffee-option-page button,
+.milk-syrup-option-page button {
+  margin: 0.5em 1.2em 0.5em 0;
+}
+button.taken-slot {
+  background: #ccc !important;
+  color: #888 !important;
+  border: 1.5px solid #bbb !important;
+  cursor: not-allowed !important;
+  font-style: italic;
+  opacity: 0.7;
+}

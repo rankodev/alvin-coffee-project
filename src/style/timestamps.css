@@ -1,0 +1,20 @@
+/* Button group styling */
+.button-group button {
+  margin: 0.5em;
+}
+
+/* Timestamp grid styling */
+.timestamp-grid {
+  display: flex;
+  flex-direction: row;
+  gap: 5em;
+  justify-content: center;
+}
+.timestamp-row {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+.timestamp-row button {
+  margin: 0.2em 0;
+}
