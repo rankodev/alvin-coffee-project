@@ -18,9 +18,6 @@ app.use(bodyParser.json());
 
 const DATA_FILE = './slots.json';
 
-// Serve static files from the React build
-app.use(express.static(path.join(__dirname, 'dist')));
-
 // Initialize slots if file doesn't exist
 if (!fs.existsSync(DATA_FILE)) {
   const slots = [
@@ -40,13 +37,12 @@ if (!fs.existsSync(DATA_FILE)) {
   fs.writeFileSync(DATA_FILE, JSON.stringify(slots, null, 2));
 }
 
-// Get all slots
+// API routes
 app.get('/slots', (req, res) => {
   const slots = JSON.parse(fs.readFileSync(DATA_FILE));
   res.json(slots);
 });
 
-// Claim a slot (normalize spaces before AM/PM) with logging
 app.post('/slots/claim', (req, res) => {
   const { timestamp } = req.body;
   let slots = JSON.parse(fs.readFileSync(DATA_FILE));
@@ -66,8 +62,11 @@ app.post('/slots/claim', (req, res) => {
   res.json({ success: true });
 });
 
-// Serve index.html for all other routes (SPA fallback)
-app.get('*', (req, res) => {
+// Serve static files from the React build
+app.use(express.static(path.join(__dirname, 'dist')));
+
+// Serve index.html for all other non-API routes (SPA fallback)
+app.get(/^\/(?!api|slots).*/, (req, res) => {
   res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
