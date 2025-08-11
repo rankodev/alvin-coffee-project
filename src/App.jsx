@@ -63,10 +63,14 @@ function App() {
   // Fetch taken slots from Google Apps Script API before showing the timestamp page
   const fetchSlots = () => {
     setLoadingSlots(true);
-  return fetch('https://script.google.com/macros/s/AKfycby4pjXu7CdfxKsc_rLW46CdCDhIbniJYciISoGrCc-3fA_9JGW_fC_mv1M3jeujC_LP/exec')
+  return fetch('https://script.google.com/macros/s/AKfycbxUTpKnmW-ycmkVe0vVWTOS53LMB11xV6f9-MDgpX9YBz_Cb0qVx1cbZHlkcuHtpQTu/exec')
       .then(res => res.json())
       .then(data => {
-        setTakenSlots(Object.keys(data));
+        // If API returns an array, normalize spaces to non-breaking space
+        let slots = Array.isArray(data)
+          ? data.map(ts => ts.replace(/ (AM|PM)/, '\u00A0$1'))
+          : Object.keys(data);
+        setTakenSlots(slots);
         setLoadingSlots(false);
       });
   };
@@ -81,7 +85,7 @@ function App() {
   const handleTimestampClick = (timestamp) => {
     if (takenSlots.includes(timestamp)) return;
     // Try to claim the slot atomically
-  fetch('https://script.google.com/macros/s/AKfycby4pjXu7CdfxKsc_rLW46CdCDhIbniJYciISoGrCc-3fA_9JGW_fC_mv1M3jeujC_LP/exec', {
+  fetch('https://script.google.com/macros/s/AKfycbxUTpKnmW-ycmkVe0vVWTOS53LMB11xV6f9-MDgpX9YBz_Cb0qVx1cbZHlkcuHtpQTu/exec', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: `slot=${encodeURIComponent(timestamp)}`
