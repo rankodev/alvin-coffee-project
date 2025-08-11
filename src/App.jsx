@@ -291,37 +291,12 @@ function App() {
   }
 
   if (showHero) {
-    return <HeroPage onContinue={() => setShowHero(false)} />;
-  }
-  if (!isAuthenticated) {
-    return (
-      <div className="login-page" style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '100vh'}}>
-        <h2>Login</h2>
-        <form onSubmit={handleLogin} style={{display: 'flex', flexDirection: 'column', gap: '1em', minWidth: '250px'}}>
-          <input
-            type="text"
-            placeholder="Username"
-            value={loginUsername}
-            onChange={e => setLoginUsername(e.target.value)}
-            required
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            value={loginPassword}
-            onChange={e => setLoginPassword(e.target.value)}
-            required
-          />
-          <button type="submit">Login</button>
-          {loginError && <div style={{color: 'red', marginTop: '0.5em'}}>{loginError}</div>}
-        </form>
-      </div>
-    );
+    return <HeroPage onContinue={() => { setShowHero(false); setIsAuthenticated(true); }} />;
   }
 
   return (
     <>
-      <h1>Alvin's Expresso</h1>
+  <h1>HCL Coffee Hour</h1>
       {pageContent}
     </>
   )
