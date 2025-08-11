@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import HeroPage from './HeroPage';
 import './App.css'
 import './style/timestamps.css'
 import { CoffeeTypePage, CoffeeOptionPage, MilkSyrupOptionPage, TimestampPage } from './CoffeeTypePage'
@@ -6,6 +7,8 @@ import ConfirmPage, { generateConfirmationNumber } from './ConfirmPage'
 import FinalPage from './FinalPage'
 
 function App() {
+  // Hero page state
+  const [showHero, setShowHero] = useState(true);
   // Login state
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loginUsername, setLoginUsername] = useState('');
@@ -287,6 +290,9 @@ function App() {
     />;
   }
 
+  if (showHero) {
+    return <HeroPage onContinue={() => setShowHero(false)} />;
+  }
   if (!isAuthenticated) {
     return (
       <div className="login-page" style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '100vh'}}>
