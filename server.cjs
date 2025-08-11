@@ -21,6 +21,7 @@ const DATA_FILE = './slots.json';
 // Initialize slots if file doesn't exist
 if (!fs.existsSync(DATA_FILE)) {
   const slots = [
+    { "id": 0, "timestamp": "8:00 AM", "taken": false },
     { "id": 1, "timestamp": "8:05 AM", "taken": false },
     { "id": 2, "timestamp": "8:10 AM", "taken": false },
     { "id": 3, "timestamp": "8:15 AM", "taken": false },
