@@ -1,14 +1,25 @@
+
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const fs = require('fs');
+const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 4000;
+
+// Set CSP header for all responses
+app.use((req, res, next) => {
+  res.setHeader('Content-Security-Policy', "default-src 'self'; script-src 'self' 'unsafe-inline'; img-src 'self' data: https:;");
+  next();
+});
 
 app.use(cors());
 app.use(bodyParser.json());
 
 const DATA_FILE = './slots.json';
+
+// Serve static files from the React build
+app.use(express.static(path.join(__dirname, 'dist')));
 
 // Initialize slots if file doesn't exist
 if (!fs.existsSync(DATA_FILE)) {
@@ -35,7 +46,6 @@ app.get('/slots', (req, res) => {
   res.json(slots);
 });
 
-// Claim a slot
 // Claim a slot (normalize spaces before AM/PM) with logging
 app.post('/slots/claim', (req, res) => {
   const { timestamp } = req.body;
@@ -56,6 +66,11 @@ app.post('/slots/claim', (req, res) => {
   res.json({ success: true });
 });
 
+// Serve index.html for all other routes (SPA fallback)
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+});
+
 app.listen(PORT, () => {
-  console.log(`Slot backend running on http://localhost:${PORT}`);
+  console.log(`Slot backend and frontend running on http://localhost:${PORT}`);
 });
