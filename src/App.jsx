@@ -58,15 +58,46 @@ function App() {
 
   // Track taken time slots (no persistence)
   const [takenSlots, setTakenSlots] = useState([]);
+  const [loadingSlots, setLoadingSlots] = useState(false);
 
-  // Fetch taken slots from Google Apps Script API
-  useEffect(() => {
-    fetch('https://script.google.com/macros/s/AKfycbylpYNyj8v1qJyn8yUnvqZYfTpXeq_7xb_cLfzq-rv7CAh8Eauicn2j46GqXCc4Hqjt/exec')
+  // Fetch taken slots from Google Apps Script API before showing the timestamp page
+  const fetchSlots = () => {
+    setLoadingSlots(true);
+  return fetch('https://script.google.com/macros/s/AKfycby4pjXu7CdfxKsc_rLW46CdCDhIbniJYciISoGrCc-3fA_9JGW_fC_mv1M3jeujC_LP/exec')
       .then(res => res.json())
       .then(data => {
         setTakenSlots(Object.keys(data));
+        setLoadingSlots(false);
       });
-  }, []);
+  };
+
+  useEffect(() => {
+    if (page === 3) {
+      fetchSlots();
+    }
+  }, [page]);
+
+  // Atomic slot claim
+  const handleTimestampClick = (timestamp) => {
+    if (takenSlots.includes(timestamp)) return;
+    // Try to claim the slot atomically
+  fetch('https://script.google.com/macros/s/AKfycby4pjXu7CdfxKsc_rLW46CdCDhIbniJYciISoGrCc-3fA_9JGW_fC_mv1M3jeujC_LP/exec', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: `slot=${encodeURIComponent(timestamp)}`
+    })
+      .then(res => res.json())
+      .then(result => {
+        if (result.success) {
+          setSelectedTimestamp(timestamp);
+          setShowConfirm(true);
+          setPage(4);
+        } else {
+          alert('Sorry, that slot was just taken. Please pick another.');
+          fetchSlots(); // Refresh slots
+        }
+      });
+  };
 
   // Handlers for navigation and selection
   const handleCoffeeTypeSelect = (type) => {
@@ -110,12 +141,6 @@ function App() {
     setMilkType(null);
     setSyrupType(null);
     setMilkSyrupComplete(false);
-  };
-  const handleTimestampClick = (timestamp) => {
-    if (takenSlots.includes(timestamp)) return; // Prevent selecting taken slot
-    setSelectedTimestamp(timestamp);
-    setShowConfirm(true);
-    setPage(4);
   };
   const handleTimestampBack = () => {
     if (coffeeOption === 'Latte') {
@@ -200,7 +225,11 @@ function App() {
       onBack={handleBackToOption}
     />;
   } else if (page === 3) {
-    pageContent = <TimestampPage timestampGrid={timestampGrid} onTimestampClick={handleTimestampClick} onBack={handleTimestampBack} selectedTimestamp={selectedTimestamp} takenSlots={takenSlots} />;
+    if (loadingSlots) {
+      pageContent = <div>Loading available time slots...</div>;
+    } else {
+      pageContent = <TimestampPage timestampGrid={timestampGrid} onTimestampClick={handleTimestampClick} onBack={handleTimestampBack} selectedTimestamp={selectedTimestamp} takenSlots={takenSlots} />;
+    }
   } else if (page === 4 && showConfirm) {
     pageContent = (
       <ConfirmPage
