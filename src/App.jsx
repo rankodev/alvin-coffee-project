@@ -60,17 +60,14 @@ function App() {
   const [takenSlots, setTakenSlots] = useState([]);
   const [loadingSlots, setLoadingSlots] = useState(false);
 
-  // Fetch taken slots from Google Apps Script API before showing the timestamp page
+  // Fetch slots from local Node.js backend
   const fetchSlots = () => {
     setLoadingSlots(true);
-  return fetch('https://script.google.com/macros/s/AKfycbxUTpKnmW-ycmkVe0vVWTOS53LMB11xV6f9-MDgpX9YBz_Cb0qVx1cbZHlkcuHtpQTu/exec')
+  return fetch('https://alvin-coffee-project-d30ebc7da225.herokuapp.com/slots')
       .then(res => res.json())
       .then(data => {
-        // If API returns an array, normalize spaces to non-breaking space
-        let slots = Array.isArray(data)
-          ? data.map(ts => ts.replace(/ (AM|PM)/, '\u00A0$1'))
-          : Object.keys(data);
-        setTakenSlots(slots);
+        // data is an array of slot objects
+        setTakenSlots(data.filter(slot => slot.taken).map(slot => slot.timestamp));
         setLoadingSlots(false);
       });
   };
@@ -78,29 +75,21 @@ function App() {
   useEffect(() => {
     if (page === 3) {
       fetchSlots();
+      setSelectedTimestamp(null); // Reset selection when entering timestamp page
     }
   }, [page]);
 
-  // Atomic slot claim
+  // Timestamp selection (highlight only, claim on continue)
   const handleTimestampClick = (timestamp) => {
     if (takenSlots.includes(timestamp)) return;
-    // Try to claim the slot atomically
-  fetch('https://script.google.com/macros/s/AKfycbxUTpKnmW-ycmkVe0vVWTOS53LMB11xV6f9-MDgpX9YBz_Cb0qVx1cbZHlkcuHtpQTu/exec', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: `slot=${encodeURIComponent(timestamp)}`
-    })
-      .then(res => res.json())
-      .then(result => {
-        if (result.success) {
-          setSelectedTimestamp(timestamp);
-          setShowConfirm(true);
-          setPage(4);
-        } else {
-          alert('Sorry, that slot was just taken. Please pick another.');
-          fetchSlots(); // Refresh slots
-        }
-      });
+    setSelectedTimestamp(timestamp);
+  };
+
+  // Continue after selecting timestamp (just go to confirm page, do not claim slot yet)
+  const handleTimestampContinue = () => {
+    if (!selectedTimestamp) return;
+    setShowConfirm(true);
+    setPage(4);
   };
 
   // Handlers for navigation and selection
@@ -155,25 +144,63 @@ function App() {
     setSelectedTimestamp(null);
     setShowConfirm(false);
   };
+  // Claim the slot only when confirming the order (Node backend)
   const handleConfirm = ({ name, notes }) => {
     const confirmationNum = generateConfirmationNumber();
-    setShowConfirm(false);
-    setPage(5);
-    setConfirmationNumber(confirmationNum);
-    setUserName(name);
-    setUserNotes(notes);
-    setFinalOrder({
-      confirmationNumber: confirmationNum,
-      userName: name,
-      userNotes: notes,
-      coffeeType,
-      coffeeOption,
-      milkType,
-      syrupType,
-      timestamp: selectedTimestamp
-    });
     if (selectedTimestamp) {
-      setTakenSlots(prev => [...prev, selectedTimestamp]);
+  fetch('https://alvin-coffee-project-d30ebc7da225.herokuapp.com/slots/claim', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ timestamp: selectedTimestamp })
+      })
+        .then(res => res.json())
+        .then(result => {
+          if (result.success) {
+            setShowConfirm(false);
+            setPage(5);
+            setConfirmationNumber(confirmationNum);
+            setUserName(name);
+            setUserNotes(notes);
+            setFinalOrder({
+              confirmationNumber: confirmationNum,
+              userName: name,
+              userNotes: notes,
+              coffeeType,
+              coffeeOption,
+              milkType,
+              syrupType,
+              timestamp: selectedTimestamp
+            });
+            // Refetch slots to update UI after confirmation
+            fetchSlots();
+          } else {
+            alert('Sorry, that slot was just taken. Please pick another.');
+            setShowConfirm(false);
+            setPage(3);
+            fetchSlots();
+            setSelectedTimestamp(null);
+          }
+        })
+        .catch(err => {
+          console.error('Error claiming timestamp:', err);
+          alert('There was a problem claiming the slot. Please try again.');
+        });
+    } else {
+      setShowConfirm(false);
+      setPage(5);
+      setConfirmationNumber(confirmationNum);
+      setUserName(name);
+      setUserNotes(notes);
+      setFinalOrder({
+        confirmationNumber: confirmationNum,
+        userName: name,
+        userNotes: notes,
+        coffeeType,
+        coffeeOption,
+        milkType,
+        syrupType,
+        timestamp: selectedTimestamp
+      });
     }
   };
   const handleCancel = () => {
@@ -232,7 +259,7 @@ function App() {
     if (loadingSlots) {
       pageContent = <div>Loading available time slots...</div>;
     } else {
-      pageContent = <TimestampPage timestampGrid={timestampGrid} onTimestampClick={handleTimestampClick} onBack={handleTimestampBack} selectedTimestamp={selectedTimestamp} takenSlots={takenSlots} />;
+      pageContent = <TimestampPage timestampGrid={timestampGrid} onTimestampClick={handleTimestampClick} onBack={handleTimestampBack} selectedTimestamp={selectedTimestamp} takenSlots={takenSlots} onContinue={handleTimestampContinue} />;
     }
   } else if (page === 4 && showConfirm) {
     pageContent = (

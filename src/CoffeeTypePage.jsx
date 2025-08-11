@@ -67,16 +67,18 @@ function MilkSyrupOptionPage({ onMilkSelect, onSyrupSelect, milkType, syrupType,
   );
 }
 
-function TimestampPage({ timestampGrid, onTimestampClick, onBack, selectedTimestamp, takenSlots = [] }) {
+function TimestampPage({ timestampGrid, onTimestampClick, onBack, selectedTimestamp, takenSlots = [], onContinue }) {
   return (
     <div>
       <button onClick={onBack} style={{marginBottom: '1em'}}>Back</button>
-      <table className="timestamp-table" style={{margin: '0 auto', borderCollapse: 'collapse'}}>
+      <table className="timestamp-grid" style={{margin: '0 auto', borderCollapse: 'collapse'}}>
         <tbody>
           {timestampGrid.map((row, rowIdx) => (
             <tr key={rowIdx}>
               {row.map((timestamp, colIdx) => {
-                const isTaken = takenSlots.includes(timestamp);
+                // Normalize spaces for comparison
+                const normalize = str => str.replace(/[\u0020\u00A0](AM|PM)/, ' $1');
+                const isTaken = takenSlots.some(t => normalize(t) === normalize(timestamp));
                 return (
                   <td key={colIdx} style={{padding: '0.2em'}}>
                     <button
@@ -96,6 +98,9 @@ function TimestampPage({ timestampGrid, onTimestampClick, onBack, selectedTimest
           ))}
         </tbody>
       </table>
+      <div style={{marginTop: '1em'}}>
+        <button className="continue-btn" onClick={onContinue} disabled={!selectedTimestamp}>Continue</button>
+      </div>
     </div>
   );
 }
