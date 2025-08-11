@@ -30,7 +30,7 @@ function FinalPage({ confirmationNumber, userName, userNotes, coffeeType, coffee
     formData.append('entry.1872596417', coffeeDetails); // Concatenated Coffee Details
     formData.append('entry.951955356', timestamp || ''); // Timestamp
     formData.append('entry.617066582', number || ''); // Confirmation Number
-    formData.append('entry.736412385', slotFilled || '')
+    formData.append('entry.736412385', 'Yes'); // Slot Filled always Yes
     // Send POST request
     fetch(formUrl, {
       method: 'POST',

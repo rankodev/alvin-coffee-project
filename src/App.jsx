@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './App.css'
 import './style/timestamps.css'
 import { CoffeeTypePage, CoffeeOptionPage, MilkSyrupOptionPage, TimestampPage } from './CoffeeTypePage'
@@ -35,15 +35,14 @@ function App() {
   const [finalOrder, setFinalOrder] = useState({});
   // Remove showWelcome state and always show both welcome and coffee type selection together
 
-  // Generate a 4x6 grid of 5-minute slots starting from 8:00 am
+  // Generate a 4x3 grid of 5-minute slots starting from 8:00 am, but only include times before or at 9:00 am
   const startHour = 8;
   const startMinute = 0;
-  const slots = 24; // 4 rows x 6 columns
   const slotInterval = 5; // 5 minutes
   const timestamps = [];
   let hour = startHour;
   let minute = startMinute;
-  for (let i = 0; i < slots; i++) {
+  while (hour < 9 || (hour === 9 && minute === 0)) {
     timestamps.push(formatTime(hour, minute));
     minute += slotInterval;
     if (minute >= 60) {
@@ -51,14 +50,23 @@ function App() {
       hour++;
     }
   }
-  // Build 4x6 grid
+  // Build 3x4 grid (3 rows, 4 columns)
   const timestampGrid = [];
-  for (let i = 0; i < 4; i++) {
-    timestampGrid.push(timestamps.slice(i * 6, (i + 1) * 6));
+  for (let i = 0; i < 3; i++) {
+    timestampGrid.push(timestamps.slice(i * 4, (i + 1) * 4));
   }
 
   // Track taken time slots (no persistence)
   const [takenSlots, setTakenSlots] = useState([]);
+
+  // Fetch taken slots from Google Apps Script API
+  useEffect(() => {
+    fetch('https://script.google.com/macros/s/AKfycbylpYNyj8v1qJyn8yUnvqZYfTpXeq_7xb_cLfzq-rv7CAh8Eauicn2j46GqXCc4Hqjt/exec')
+      .then(res => res.json())
+      .then(data => {
+        setTakenSlots(Object.keys(data));
+      });
+  }, []);
 
   // Handlers for navigation and selection
   const handleCoffeeTypeSelect = (type) => {
