@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 4000;
 
 // Set CSP header for all responses
 app.use((req, res, next) => {
-  res.setHeader('Content-Security-Policy', "default-src 'self'; script-src 'self' 'unsafe-inline'; img-src 'self' data: https:;");
+  res.setHeader('Content-Security-Policy', "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https://alvin-coffee-project-d30ebc7da225.herokuapp.com/;");
   next();
 });
 
