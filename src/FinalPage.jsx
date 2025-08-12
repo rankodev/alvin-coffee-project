@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import styles from './CoffeeTypePage.module.scss';
 import { generateConfirmationNumber } from './ConfirmPage';
 
 function FinalPage({ confirmationNumber, userName, userNotes, coffeeType, coffeeOption, milkType, syrupType, timestamp, onNewOrder }) {
@@ -40,32 +41,38 @@ function FinalPage({ confirmationNumber, userName, userNotes, coffeeType, coffee
   }, [number, userName, userNotes, coffeeDetails, timestamp]);
 
   return (
-    <div className="final-page">
-      <h2>Order Confirmed!</h2>
-      <p>Your order has been placed successfully.</p>
-      <div style={{margin: '1em 0', fontWeight: 'bold', fontSize: '1.5em'}}>
-        Confirmation Number: {number}
+    <div className={styles.coffeeTypePage}>
+      <div className={styles.orderCard}>
+        <div className={styles.orderCardHeader}>
+          <div className={styles.orderCardTitle}>Order Confirmed!</div>
+        </div>
+        <div className={styles.orderCardBody}>
+          <p>Your order has been placed successfully.</p>
+          <div style={{margin: '1em 0', fontWeight: 'bold', fontSize: '1.5em'}}>
+            Confirmation Number: {number}
+          </div>
+          {userName && (
+            <div style={{margin: '1em 0'}}>
+              <strong>Name:</strong> {userName}
+            </div>
+          )}
+          {userNotes && (
+            <div style={{margin: '1em 0'}}>
+              <strong>Extra Notes:</strong> {userNotes}
+            </div>
+          )}
+          <div style={{margin: '1em 0'}}>
+            <strong>Coffee Details:</strong> {coffeeDetails}
+          </div>
+          {timestamp && (
+            <div style={{margin: '1em 0'}}>
+              <strong>Timestamp:</strong> {timestamp}
+            </div>
+          )}
+          <p>Thank you for your order!</p>
+          <button className={styles.orderCardContinueBtn} onClick={onNewOrder} style={{marginTop: '2em', fontSize: '1.1em'}}>New Order</button>
+        </div>
       </div>
-      {userName && (
-        <div style={{margin: '1em 0'}}>
-          <strong>Name:</strong> {userName}
-        </div>
-      )}
-      {userNotes && (
-        <div style={{margin: '1em 0'}}>
-          <strong>Extra Notes:</strong> {userNotes}
-        </div>
-      )}
-      <div style={{margin: '1em 0'}}>
-        <strong>Coffee Details:</strong> {coffeeDetails}
-      </div>
-      {timestamp && (
-        <div style={{margin: '1em 0'}}>
-          <strong>Timestamp:</strong> {timestamp}
-        </div>
-      )}
-      <p>Thank you for your order!</p>
-      <button onClick={onNewOrder} style={{marginTop: '2em', fontSize: '1.1em'}}>New Order</button>
     </div>
   );
 }

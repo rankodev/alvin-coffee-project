@@ -1,3 +1,55 @@
+.buttonRow {
+  display: flex;
+  flex-direction: row;
+  gap: 1.5em;
+  margin-top: 2.5em;
+}
+.buttonRow .orderCardContinueBtn {
+  flex: 7 1 0%;
+  max-width: none;
+}
+.buttonRow .orderCardBackBtn {
+  flex: 3 1 0%;
+  max-width: none;
+}
+.optionBtnRow {
+  display: flex;
+  flex-direction: row;
+  gap: 1.5em;
+  margin-top: 2.5em;
+}
+.optionBtnRow .orderCardContinueBtn {
+  flex: 7 1 0%;
+  max-width: none;
+}
+.optionBtnRow .orderCardBackBtn {
+  flex: 3 1 0%;
+  max-width: none;
+}
+.milkSyrupBtnRow {
+  display: flex;
+  flex-direction: row;
+  gap: 1.5em;
+  margin-top: 2.5em;
+}
+.milkSyrupBtnRow .orderCardContinueBtn {
+  flex: 7 1 0%;
+  max-width: none;
+}
+.milkSyrupBtnRow .orderCardBackBtn {
+  flex: 3 1 0%;
+  max-width: none;
+}
+/* Syrup row for single-line layout */
+.syrupRow {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 0.3em;
+  justify-content: center;
+  margin-bottom: 2em;
+  overflow-x: auto;
+  white-space: nowrap;
+}
 
 
 @keyframes bounce {
@@ -25,11 +77,114 @@
 }
 /* CoffeeTypePage.module.scss */
 .coffeeTypePage {
+  min-height: 100vh;
+  background: #f6e7d2;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 60vh;
+}
+
+.orderCard {
+  background: #fff;
+  border-radius: 2em;
+  border: 4px solid #4d2c0c;
+  box-shadow: 0 2px 16px #e0cfa0;
+  max-width: 600px;
+  width: 95vw;
+  margin: 2em auto;
+  padding: 0;
+  overflow: hidden;
+}
+
+/* Wider card for milk/syrup step */
+.orderCard.wide {
+  max-width: 1100px;
+  min-height: 650px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.syrupRow .orderCardCoffeeBtn {
+  padding-left: 0.7em;
+  padding-right: 0.7em;
+  font-size: 1em;
+  min-width: 70px;
+  margin: 0 0.15em;
+}
+.orderCardHeader {
+  background: #f6e0c2;
+  padding: 1.2em 2em 0.5em 2em;
+  border-radius: 2em 2em 0 0;
+  text-align: center;
+}
+.orderCardTitle {
+  font-size: 2.5em;
+  font-weight: 800;
+  color: #3b2c1a;
+  margin-bottom: 0.1em;
+}
+.orderCardSubtitle {
+  color: #a88b6a;
+  font-size: 1.3em;
+  font-weight: 600;
+  margin-bottom: 0.2em;
+}
+.orderCardBody {
+  background: #fff;
+  padding: 2.2em 2em 2.5em 2em;
+  text-align: center;
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.orderCardQuestion {
+  font-size: 2.2em;
+  font-weight: 700;
+  color: #3b2c1a;
+  margin-bottom: 1.2em;
+}
+.orderCardBtnRow {
+  display: flex;
+  gap: 2em;
+  justify-content: center;
+  margin-bottom: 2.2em;
+}
+.orderCardCoffeeBtn {
+  background: #d2bb97;
+  color: #3b2c1a;
+  font-size: 1.3em;
+  font-weight: 500;
+  border: none;
+  border-radius: 0.6em;
+  padding: 0.7em 2.2em;
+  box-shadow: 0 2px 8px #e0cfa0;
+  margin: 0 0.5em;
+  transition: background 0.18s, box-shadow 0.18s;
+  cursor: pointer;
+}
+.orderCardCoffeeBtn.selected {
+  background: #bca178;
+  color: #2d1a06;
+  font-weight: 700;
+  box-shadow: 0 2px 12px #e0cfa0;
+}
+.orderCardContinueBtn {
+  background: linear-gradient(90deg, #b8860b 60%, #e0cfa0 100%);
+  color: #3b2c1a;
+  font-size: 1.2em;
+  font-weight: 700;
+  border: none;
+  border-radius: 0.7em;
+  padding: 0.8em 2.8em;
+  margin-top: 1.5em;
+  box-shadow: 0 4px 18px #e0cfa0, 0 2px 8px #b8860b;
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
+}
+.orderCardContinueBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 .coffeeTypeTitle {

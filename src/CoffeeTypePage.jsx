@@ -1,14 +1,44 @@
+export { CoffeeTypePage, CoffeeOptionPage, MilkSyrupOptionPage, TimestampPage };
 import React from 'react';
+import styles from './CoffeeTypePage.module.scss';
 //
 
 function CoffeeTypePage({ onSelect, onContinue, canContinue, selectedType }) {
+  // ...existing code...
+  // Correct order card rendering only at the top level
   return (
-    <div className="coffee-type-page" style={{ marginTop: 0, paddingTop: 0 }}>
-      <h1 style={{ fontSize: '2.5em', marginBottom: '0.5em' }}>What kind of coffee would you like?</h1>
-      <button onClick={() => onSelect('Hot')} className={selectedType === 'Hot' ? 'selected' : ''}>Hot Coffee</button>
-      <button onClick={() => onSelect('Ice')} className={selectedType === 'Ice' ? 'selected' : ''}>Ice Coffee</button>
-      <div style={{marginTop: '1em'}}>
-        <button className="continue-btn" onClick={onContinue} disabled={!canContinue}>Continue</button>
+    <div className={styles.coffeeTypePage}>
+      <div className={styles.orderCard}>
+        <div className={styles.orderCardHeader}>
+          <div className={styles.orderCardTitle}>Welcome!</div>
+          <div className={styles.orderCardSubtitle}>Ready to order?</div>
+        </div>
+        <div className={styles.orderCardBody}>
+          <div className={styles.orderCardQuestion}>What kind of coffee would you like?</div>
+          <div className={styles.orderCardBtnRow}>
+            <button
+              className={styles.orderCardCoffeeBtn + (selectedType === 'Hot' ? ' ' + styles.selected : '')}
+              onClick={() => onSelect('Hot')}
+              type="button"
+            >
+              Hot Coffee
+            </button>
+            <button
+              className={styles.orderCardCoffeeBtn + (selectedType === 'Ice' ? ' ' + styles.selected : '')}
+              onClick={() => onSelect('Ice')}
+              type="button"
+            >
+              Ice Coffee
+            </button>
+          </div>
+          <button
+            className={styles.orderCardContinueBtn}
+            onClick={onContinue}
+            disabled={!canContinue}
+          >
+            Continue
+          </button>
+        </div>
       </div>
     </div>
   );
@@ -18,14 +48,33 @@ function CoffeeTypePage({ onSelect, onContinue, canContinue, selectedType }) {
 function CoffeeOptionPage({ type, onSelect, onBack, onContinue, canContinue, selectedOption }) {
   const options = type === 'Hot' ? ['Espresso', 'Cubano', 'Latte'] : ['Latte'];
   return (
-    <div className="coffee-option-page">
-      <h2>Choose {type} Coffee Option</h2>
-      {options.map(opt => (
-        <button key={opt} onClick={() => onSelect(opt)} className={selectedOption === opt ? 'selected' : ''}>{opt}</button>
-      ))}
-      <div style={{marginTop: '1em'}}>
-        <button onClick={onBack} style={{marginRight: '1em'}}>Back</button>
-        <button className="continue-btn" onClick={onContinue} disabled={!canContinue}>Continue</button>
+    <div className={styles.coffeeTypePage}>
+      <div className={styles.orderCard}>
+        <div className={styles.orderCardHeader}>
+          <div className={styles.orderCardTitle}>Choose {type} Coffee Option</div>
+        </div>
+        <div className={styles.orderCardBody}>
+          <div className={styles.orderCardBtnRow}>
+            {options.map(opt => (
+              <button
+                key={opt}
+                className={styles.orderCardCoffeeBtn + (selectedOption === opt ? ' ' + styles.selected : '')}
+                onClick={() => onSelect(opt)}
+                type="button"
+              >
+                {opt}
+              </button>
+            ))}
+          </div>
+          <div>
+            <button className={styles.orderCardContinueBtn} onClick={onBack} style={{marginRight: '1em', background: '#eee', color: '#3b2c1a'}}>
+              Back
+            </button>
+            <button className={styles.orderCardContinueBtn} onClick={onContinue} disabled={!canContinue}>
+              Continue
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -33,78 +82,91 @@ function CoffeeOptionPage({ type, onSelect, onBack, onContinue, canContinue, sel
 
 function MilkSyrupOptionPage({ onMilkSelect, onSyrupSelect, milkType, syrupType, onContinue, onBack }) {
   const milkOptions = ['Whole', 'Oat'];
-  const syrupOptions = ['N/A', 'Lavendar', 'Mocha', 'Caramel', 'Vanilla'];
+  const syrupOptions = ['N/A', 'Lavender', 'Mocha', 'Caramel', 'Vanilla'];
   return (
-    <div className="milk-syrup-option-page">
-      <h2>Choose Milk and Syrup</h2>
-      <div style={{marginBottom: '1em'}}>
-        <div>Milk:</div>
-        {milkOptions.map(opt => (
-          <button
-            key={opt}
-            onClick={() => onMilkSelect(opt)}
-            className={milkType === opt ? 'selected' : ''}
-            style={{marginRight: '0.5em'}}
-          >
-            {opt}
-          </button>
-        ))}
+    <div className={styles.coffeeTypePage}>
+      <div className={styles.orderCard + ' ' + styles.wide}>
+        <div className={styles.orderCardHeader}>
+          <div className={styles.orderCardTitle}>Choose Milk and Syrup</div>
+        </div>
+        <div className={styles.orderCardBody}>
+          <div style={{marginBottom: '1em'}}>
+            <div>Milk:</div>
+            {milkOptions.map(opt => (
+              <button
+                key={opt}
+                onClick={() => onMilkSelect(opt)}
+                className={styles.orderCardCoffeeBtn + (milkType === opt ? ' ' + styles.selected : '')}
+                style={{marginRight: '0.5em'}}
+              >
+                {opt}
+              </button>
+            ))}
+          </div>
+          <div style={{marginBottom: '1em'}}>
+            <div>Syrup:</div>
+            {syrupOptions.map(opt => (
+              <button
+                key={opt}
+                onClick={() => onSyrupSelect(opt)}
+                className={styles.orderCardCoffeeBtn + (syrupType === opt ? ' ' + styles.selected : '')}
+                style={{marginRight: '0.5em'}}
+              >
+                {opt}
+              </button>
+            ))}
+          </div>
+          <div>
+            <button className={styles.orderCardContinueBtn} onClick={onBack} style={{marginRight: '1em', background: '#eee', color: '#3b2c1a'}}>Back</button>
+            <button className={styles.orderCardContinueBtn} onClick={onContinue} disabled={!milkType || !syrupType}>Continue</button>
+          </div>
+        </div>
       </div>
-      <div style={{marginBottom: '1em'}}>
-        <div>Syrup:</div>
-        {syrupOptions.map(opt => (
-          <button
-            key={opt}
-            onClick={() => onSyrupSelect(opt)}
-            className={syrupType === opt ? 'selected' : ''}
-            style={{marginRight: '0.5em'}}
-          >
-            {opt}
-          </button>
-        ))}
-      </div>
-      <button className="continue-btn" onClick={onContinue} disabled={!milkType || !syrupType} style={{marginRight: '1em'}}>Continue</button>
-      <button onClick={onBack}>Back</button>
     </div>
   );
 }
 
 function TimestampPage({ timestampGrid, onTimestampClick, onBack, selectedTimestamp, takenSlots = [], onContinue }) {
   return (
-    <div>
-      <button onClick={onBack} style={{marginBottom: '1em'}}>Back</button>
-      <table className="timestamp-grid" style={{margin: '0 auto', borderCollapse: 'collapse'}}>
-        <tbody>
-          {timestampGrid.map((row, rowIdx) => (
-            <tr key={rowIdx}>
-              {row.map((timestamp, colIdx) => {
-                // Normalize spaces for comparison
-                const normalize = str => str.replace(/[\u0020\u00A0](AM|PM)/, ' $1');
-                const isTaken = takenSlots.some(t => normalize(t) === normalize(timestamp));
-                return (
-                  <td key={colIdx} style={{padding: '0.2em'}}>
-                    <button
-                      onClick={() => onTimestampClick(timestamp)}
-                      className={
-                        (selectedTimestamp === timestamp ? 'selected ' : '') + (isTaken ? 'taken-slot' : '')
-                      }
-                      style={{width: '6em'}}
-                      disabled={isTaken}
-                    >
-                      {timestamp}
-                    </button>
-                  </td>
-                );
-              })}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      <div style={{marginTop: '1em'}}>
-        <button className="continue-btn" onClick={onContinue} disabled={!selectedTimestamp}>Continue</button>
+    <div className={styles.coffeeTypePage}>
+      <div className={styles.orderCard}>
+        <div className={styles.orderCardHeader}>
+          <div className={styles.orderCardTitle}>Choose a Time Slot</div>
+        </div>
+        <div className={styles.orderCardBody}>
+          <table className="timestamp-grid" style={{margin: '0 auto', borderCollapse: 'collapse'}}>
+            <tbody>
+              {timestampGrid.map((row, rowIdx) => (
+                <tr key={rowIdx}>
+                  {row.map((timestamp, colIdx) => {
+                    // Normalize spaces for comparison
+                    const normalize = str => str.replace(/[\u0020\u00A0](AM|PM)/, ' $1');
+                    const isTaken = takenSlots.some(t => normalize(t) === normalize(timestamp));
+                    return (
+                      <td key={colIdx} style={{padding: '0.2em'}}>
+                        <button
+                          onClick={() => onTimestampClick(timestamp)}
+                          className={
+                            (selectedTimestamp === timestamp ? 'selected ' : '') + (isTaken ? 'taken-slot' : '')
+                          }
+                          style={{width: '6em'}}
+                          disabled={isTaken}
+                        >
+                          {timestamp}
+                        </button>
+                      </td>
+                    );
+                  })}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <div>
+            <button className={styles.orderCardContinueBtn} onClick={onBack} style={{marginRight: '1em', background: '#eee', color: '#3b2c1a'}}>Back</button>
+            <button className={styles.orderCardContinueBtn} onClick={onContinue} disabled={!selectedTimestamp} style={{marginTop: '2em'}}>Continue</button>
+          </div>
+        </div>
       </div>
     </div>
   );
 }
-
-export { CoffeeTypePage, CoffeeOptionPage, MilkSyrupOptionPage, TimestampPage };

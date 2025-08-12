@@ -244,8 +244,6 @@ function App() {
   if (page === 0) {
     pageContent = (
       <div className="welcome-coffee-type">
-        <h1 style={{ fontSize: '2.5em', marginBottom: '0.5em' }}>Welcome!</h1>
-        <h2 style={{ fontSize: '2.5em', marginBottom: '4em' }}>Ready to order?</h2>
         <CoffeeTypePage onSelect={handleCoffeeTypeSelect} onContinue={handleTypeContinue} canContinue={!!coffeeType} selectedType={coffeeType} />
       </div>
     );
