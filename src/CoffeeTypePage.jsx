@@ -1,8 +1,9 @@
 import React from 'react';
+//
 
 function CoffeeTypePage({ onSelect, onContinue, canContinue, selectedType }) {
   return (
-    <div className="coffee-type-page">
+    <div className="coffee-type-page" style={{ marginTop: 0, paddingTop: 0 }}>
       <h1 style={{ fontSize: '2.5em', marginBottom: '0.5em' }}>What kind of coffee would you like?</h1>
       <button onClick={() => onSelect('Hot')} className={selectedType === 'Hot' ? 'selected' : ''}>Hot Coffee</button>
       <button onClick={() => onSelect('Ice')} className={selectedType === 'Ice' ? 'selected' : ''}>Ice Coffee</button>
@@ -12,6 +13,7 @@ function CoffeeTypePage({ onSelect, onContinue, canContinue, selectedType }) {
     </div>
   );
 }
+// ...existing code...
 
 function CoffeeOptionPage({ type, onSelect, onBack, onContinue, canContinue, selectedOption }) {
   const options = type === 'Hot' ? ['Espresso', 'Cubano', 'Latte'] : ['Latte'];

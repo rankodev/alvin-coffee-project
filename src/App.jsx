@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react'
 import HeroPage from './HeroPage';
 import './App.css'
+import './public-sans.css'
 import './style/timestamps.css'
 import { CoffeeTypePage, CoffeeOptionPage, MilkSyrupOptionPage, TimestampPage } from './CoffeeTypePage'
 import ConfirmPage, { generateConfirmationNumber } from './ConfirmPage'
 import FinalPage from './FinalPage'
+import HclHeader from './HclHeader';
 
 function App() {
   // Hero page state
@@ -243,7 +245,7 @@ function App() {
     pageContent = (
       <div className="welcome-coffee-type">
         <h1 style={{ fontSize: '2.5em', marginBottom: '0.5em' }}>Welcome!</h1>
-        <h2>Ready to order?</h2>
+        <h2 style={{ fontSize: '2.5em', marginBottom: '4em' }}>Ready to order?</h2>
         <CoffeeTypePage onSelect={handleCoffeeTypeSelect} onContinue={handleTypeContinue} canContinue={!!coffeeType} selectedType={coffeeType} />
       </div>
     );
@@ -296,8 +298,10 @@ function App() {
 
   return (
     <>
-  <h1>HCL Coffee Hour</h1>
-      {pageContent}
+      <HclHeader />
+      <div style={{ paddingTop: '5.5em' }}>
+        {pageContent}
+      </div>
     </>
   )
 }
