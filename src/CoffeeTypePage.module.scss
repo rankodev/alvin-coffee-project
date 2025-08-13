@@ -1,3 +1,10 @@
+.milkBtnRow {
+  display: flex;
+  flex-direction: row;
+  gap: 1.5em;
+  justify-content: center;
+  margin-bottom: 2em;
+}
 .buttonRow {
   display: flex;
   flex-direction: row;
@@ -138,6 +145,14 @@
   flex-direction: column;
   justify-content: space-between;
 }
+
+.syrupBtnRow {
+  display: flex;
+  flex-direction: row;
+  gap: 1.5em;
+  justify-content: center;
+  margin-bottom: 2em;
+}
 .orderCardQuestion {
   font-size: 1.5em;
   font-weight: 700;
@@ -179,6 +194,22 @@
   transition: background 0.07s, box-shadow 0.07s, border-color 0.07s;
   cursor: pointer;
   box-shadow: transparent 0px 0px 0px 3px, transparent 0px 0px 0px 7px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  min-width: 170px;
+}
+
+/* Special alignment for N/A syrup button */
+.syrupBtnRow .orderCardCoffeeBtn:first-child {
+  min-width: 140px;
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .orderCardCoffeeBtn:hover:not(.selected) {

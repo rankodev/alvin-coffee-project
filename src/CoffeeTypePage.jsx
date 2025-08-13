@@ -142,41 +142,45 @@ function MilkSyrupOptionPage({ onMilkSelect, onSyrupSelect, milkType, syrupType,
         <div className={styles.orderCardBody}>
           <div style={{marginBottom: '1em'}}>
             <div>Milk:</div>
-            {milkOptions.map(opt => (
-              <button
-                key={opt}
-                onClick={() => onMilkSelect(opt)}
-                className={styles.orderCardCoffeeBtn + (milkType === opt ? ' ' + styles.selected : '')}
-                style={{marginRight: '0.5em', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}
-              >
-                <img
-                  src={milkImages[opt]}
-                  alt={opt + ' milk icon'}
-                  className={styles.coffeeTypeImg + (milkType === opt ? ' ' + styles.selected : '')}
-                  style={{ marginBottom: '0.5em' }}
-                />
-                {opt}
-              </button>
-            ))}
+            <div className={styles.milkBtnRow}>
+              {milkOptions.map(opt => (
+                <button
+                  key={opt}
+                  onClick={() => onMilkSelect(opt)}
+                  className={styles.orderCardCoffeeBtn + (milkType === opt ? ' ' + styles.selected : '')}
+                  style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}
+                >
+                  <img
+                    src={milkImages[opt]}
+                    alt={opt + ' milk icon'}
+                    className={styles.coffeeTypeImg + (milkType === opt ? ' ' + styles.selected : '')}
+                    style={{ marginBottom: '0.5em' }}
+                  />
+                  {opt}
+                </button>
+              ))}
+            </div>
           </div>
           <div style={{marginBottom: '1em'}}>
             <div>Syrup:</div>
-            {syrupOptions.map(opt => (
-              <button
-                key={opt}
-                onClick={() => onSyrupSelect(opt)}
-                className={styles.orderCardCoffeeBtn + (syrupType === opt ? ' ' + styles.selected : '')}
-                style={{marginRight: '0.5em', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}
-              >
-                <img
-                  src={syrupImages[opt]}
-                  alt={opt + ' syrup icon'}
-                  className={styles.coffeeTypeImg + (syrupType === opt ? ' ' + styles.selected : '')}
-                  style={{ marginBottom: '0.5em' }}
-                />
-                {opt}
-              </button>
-            ))}
+            <div className={styles.syrupBtnRow}>
+              {syrupOptions.map(opt => (
+                <button
+                  key={opt}
+                  onClick={() => onSyrupSelect(opt)}
+                  className={styles.orderCardCoffeeBtn + (syrupType === opt ? ' ' + styles.selected : '')}
+                  style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}
+                >
+                  <img
+                    src={syrupImages[opt]}
+                    alt={opt + ' syrup icon'}
+                    className={styles.coffeeTypeImg + (syrupType === opt ? ' ' + styles.selected : '')}
+                    style={{ marginBottom: '0.5em' }}
+                  />
+                  {opt}
+                </button>
+              ))}
+            </div>
           </div>
           <div>
             <button className={styles.orderCardContinueBtn} onClick={onBack} style={{marginRight: '1em', background: '#3b4a6b', color: '#fff'}}>Back</button>
