@@ -20,15 +20,35 @@ function CoffeeTypePage({ onSelect, onContinue, canContinue, selectedType }) {
               className={styles.orderCardCoffeeBtn + (selectedType === 'Hot' ? ' ' + styles.selected : '')}
               onClick={() => onSelect('Hot')}
               type="button"
+              aria-label="Hot Coffee. Button with an icon of a steaming cup. Select to order hot coffee."
+              style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}
             >
-              Hot Coffee
+              <img
+                src="src/assets/_hot.png"
+                alt="Steaming cup representing hot coffee"
+                className={
+                  styles.coffeeTypeImg +
+                  (selectedType === 'Hot' ? ' ' + styles.selected : '')
+                }
+              />
+              <div style={{ marginTop: '0.7em' }}>Hot Coffee</div>
             </button>
             <button
               className={styles.orderCardCoffeeBtn + (selectedType === 'Ice' ? ' ' + styles.selected : '')}
               onClick={() => onSelect('Ice')}
               type="button"
+              aria-label="Ice Coffee. Button with an icon of a cold cup. Select to order iced coffee."
+              style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}
             >
-              Ice Coffee
+              <img
+                src="src/assets/_cold.png"
+                alt="Cold cup representing iced coffee"
+                className={
+                  styles.coffeeTypeImg +
+                  (selectedType === 'Ice' ? ' ' + styles.selected : '')
+                }
+              />
+              <div style={{ marginTop: '0.7em' }}>Ice Coffee</div>
             </button>
           </div>
           <button
@@ -47,6 +67,11 @@ function CoffeeTypePage({ onSelect, onContinue, canContinue, selectedType }) {
 
 function CoffeeOptionPage({ type, onSelect, onBack, onContinue, canContinue, selectedOption }) {
   const options = type === 'Hot' ? ['Espresso', 'Cubano', 'Latte'] : ['Latte'];
+  const optionImages = {
+    'Espresso': 'src/assets/espresso.png',
+    'Cubano': 'src/assets/cubano.png',
+    'Latte': 'src/assets/latte.png',
+  };
   return (
     <div className={styles.coffeeTypePage}>
       <div className={styles.orderCard}>
@@ -61,13 +86,20 @@ function CoffeeOptionPage({ type, onSelect, onBack, onContinue, canContinue, sel
                 className={styles.orderCardCoffeeBtn + (selectedOption === opt ? ' ' + styles.selected : '')}
                 onClick={() => onSelect(opt)}
                 type="button"
+                style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}
               >
+                <img
+                  src={optionImages[opt]}
+                  alt={opt + ' icon'}
+                  className={styles.coffeeTypeImg + (selectedOption === opt ? ' ' + styles.selected : '')}
+                  style={{ marginBottom: '0.5em' }}
+                />
                 {opt}
               </button>
             ))}
           </div>
           <div>
-            <button className={styles.orderCardContinueBtn} onClick={onBack} style={{marginRight: '1em', background: '#eee', color: '#3b2c1a'}}>
+            <button className={styles.orderCardContinueBtn} onClick={onBack} style={{marginRight: '1em', background: '#3b4a6b', color: '#fff'}}>
               Back
             </button>
             <button className={styles.orderCardContinueBtn} onClick={onContinue} disabled={!canContinue}>
@@ -83,6 +115,24 @@ function CoffeeOptionPage({ type, onSelect, onBack, onContinue, canContinue, sel
 function MilkSyrupOptionPage({ onMilkSelect, onSyrupSelect, milkType, syrupType, onContinue, onBack }) {
   const milkOptions = ['Whole', 'Oat'];
   const syrupOptions = ['N/A', 'Lavender', 'Mocha', 'Caramel', 'Vanilla'];
+  const syrupImages = {
+    'Lavender': 'src/assets/latte_lavander.png',
+    'Mocha': 'src/assets/latte_mocha.png',
+    'Caramel': 'src/assets/latte_caramel.png',
+    'Vanilla': 'src/assets/latte.png',
+    'N/A': 'src/assets/latte.png',
+  };
+  const milkImages = {
+    'Whole': 'src/assets/latte.png',
+    'Oat': 'src/assets/latte.png',
+  };
+  const syrupLabels = {
+    'Lavender': 'Latte (Lavender)',
+    'Mocha': 'Latte (Mocha)',
+    'Caramel': 'Latte (Caramel)',
+    'Vanilla': 'Latte (Vanilla)',
+    'N/A': 'Latte',
+  };
   return (
     <div className={styles.coffeeTypePage}>
       <div className={styles.orderCard + ' ' + styles.wide}>
@@ -97,8 +147,14 @@ function MilkSyrupOptionPage({ onMilkSelect, onSyrupSelect, milkType, syrupType,
                 key={opt}
                 onClick={() => onMilkSelect(opt)}
                 className={styles.orderCardCoffeeBtn + (milkType === opt ? ' ' + styles.selected : '')}
-                style={{marginRight: '0.5em'}}
+                style={{marginRight: '0.5em', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}
               >
+                <img
+                  src={milkImages[opt]}
+                  alt={opt + ' milk icon'}
+                  className={styles.coffeeTypeImg + (milkType === opt ? ' ' + styles.selected : '')}
+                  style={{ marginBottom: '0.5em' }}
+                />
                 {opt}
               </button>
             ))}
@@ -110,14 +166,20 @@ function MilkSyrupOptionPage({ onMilkSelect, onSyrupSelect, milkType, syrupType,
                 key={opt}
                 onClick={() => onSyrupSelect(opt)}
                 className={styles.orderCardCoffeeBtn + (syrupType === opt ? ' ' + styles.selected : '')}
-                style={{marginRight: '0.5em'}}
+                style={{marginRight: '0.5em', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}
               >
+                <img
+                  src={syrupImages[opt]}
+                  alt={opt + ' syrup icon'}
+                  className={styles.coffeeTypeImg + (syrupType === opt ? ' ' + styles.selected : '')}
+                  style={{ marginBottom: '0.5em' }}
+                />
                 {opt}
               </button>
             ))}
           </div>
           <div>
-            <button className={styles.orderCardContinueBtn} onClick={onBack} style={{marginRight: '1em', background: '#eee', color: '#3b2c1a'}}>Back</button>
+            <button className={styles.orderCardContinueBtn} onClick={onBack} style={{marginRight: '1em', background: '#3b4a6b', color: '#fff'}}>Back</button>
             <button className={styles.orderCardContinueBtn} onClick={onContinue} disabled={!milkType || !syrupType}>Continue</button>
           </div>
         </div>
@@ -162,7 +224,7 @@ function TimestampPage({ timestampGrid, onTimestampClick, onBack, selectedTimest
             </tbody>
           </table>
           <div>
-            <button className={styles.orderCardContinueBtn} onClick={onBack} style={{marginRight: '1em', background: '#eee', color: '#3b2c1a'}}>Back</button>
+            <button className={styles.orderCardContinueBtn} onClick={onBack} style={{marginRight: '1em', background: '#3b4a6b', color: '#fff'}}>Back</button>
             <button className={styles.orderCardContinueBtn} onClick={onContinue} disabled={!selectedTimestamp} style={{marginTop: '2em'}}>Continue</button>
           </div>
         </div>

@@ -66,15 +66,17 @@ function HeroPage({ onContinue }) {
             <h1
               style={{
                 fontSize: '3.2em',
-                fontWeight: 900,
-                color: '#2d1a06',
+                fontWeight: 400,
+                color: '#222',
                 marginBottom: '0.2em',
                 letterSpacing: '0.04em',
-                fontFamily: 'Montserrat, Segoe UI, Arial, sans-serif',
-                textShadow: '0 2px 12px #e0cfa0, 0 1px 0 #fff'
+                fontFamily: 'Public Sans, Segoe UI, Arial, sans-serif',
+                textShadow: '0 2px 12px #e0cfa0, 0 1px 0 #fff',
+                lineHeight: 1.1
               }}
             >
-              HCI Coffee Hour
+              <span style={{ color: '#222', fontWeight: 400, textShadow: '0 2px 12px #e0cfa0, 0 1px 0 #fff' }}>HCI </span>
+              <span style={{ color: '#7ca2ab', fontWeight: 600, textShadow: '0 2px 12px #e0cfa0, 0 1px 0 #fff' }}>Coffee Hour</span>
             </h1>
             <div style={{ fontSize: '1.35em', color: '#5a3a1a', marginBottom: '0.5em', fontWeight: 500, letterSpacing: '0.02em', fontFamily: 'Segoe UI, Montserrat, Arial, sans-serif' }}>Friday, August 22nd</div>
             <div style={{ fontSize: '1.35em', color: '#5a3a1a', marginBottom: '0', fontWeight: 500, letterSpacing: '0.02em', fontFamily: 'Segoe UI, Montserrat, Arial, sans-serif' }}>8:00 AM - 9:00 AM</div>

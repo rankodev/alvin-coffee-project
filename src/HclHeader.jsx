@@ -10,7 +10,10 @@ const HclHeader = () => (
 
     </div>
     <nav className={styles.nav} aria-label="Main navigation">
-        <span className={styles.brandText}>HCI Coffee Hour</span>
+        <span className={styles.brandText}>
+          <span className={styles.brandTextDark}>HCI </span>
+          <span className={styles.brandTextAccent}>Coffee Hour</span>
+        </span>
     </nav>
     <div>
       
