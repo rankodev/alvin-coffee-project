@@ -10,11 +10,11 @@ function CoffeeTypePage({ onSelect, onContinue, canContinue, selectedType }) {
     <div className={styles.coffeeTypePage}>
       <div className={styles.orderCard}>
         <div className={styles.orderCardHeader}>
-          <div className={styles.orderCardTitle}>Welcome!</div>
-          <div className={styles.orderCardSubtitle}>Ready to order?</div>
+          <div className={styles.orderCardTitle}>Let's get your order ready.</div>
+          <div className={styles.orderCardSubtitle}>What kind of coffee would you like?</div>
         </div>
         <div className={styles.orderCardBody}>
-          <div className={styles.orderCardQuestion}>What kind of coffee would you like?</div>
+          <div className={styles.orderCardQuestion}></div>
           <div className={styles.orderCardBtnRow}>
             <button
               className={styles.orderCardCoffeeBtn + (selectedType === 'Hot' ? ' ' + styles.selected : '')}
@@ -77,9 +77,11 @@ function CoffeeOptionPage({ type, onSelect, onBack, onContinue, canContinue, sel
       <div className={styles.orderCard}>
         <div className={styles.orderCardHeader}>
           <div className={styles.orderCardTitle}>Choose {type} Coffee Option</div>
+          <div className={styles.orderCardSubheading}>Please make a selection below</div>
         </div>
         <div className={styles.orderCardBody}>
-          <div className={styles.orderCardBtnRow}>
+          {/* Removed orderCardQuestion caption as requested */}
+              <div className={styles.orderCardBtnRow} style={{ marginTop: '2.5em' }}>
             {options.map(opt => (
               <button
                 key={opt}
@@ -138,8 +140,10 @@ function MilkSyrupOptionPage({ onMilkSelect, onSyrupSelect, milkType, syrupType,
       <div className={styles.orderCard + ' ' + styles.wide}>
         <div className={styles.orderCardHeader}>
           <div className={styles.orderCardTitle}>Choose Milk and Syrup</div>
+          <div className={styles.orderCardSubheading}>Please make a selection below</div>
         </div>
         <div className={styles.orderCardBody}>
+          {/* Removed orderCardQuestion caption as requested */}
           <div style={{marginBottom: '1em'}}>
             <div>Milk:</div>
             <div className={styles.milkBtnRow}>
@@ -163,7 +167,7 @@ function MilkSyrupOptionPage({ onMilkSelect, onSyrupSelect, milkType, syrupType,
           </div>
           <div style={{marginBottom: '1em'}}>
             <div>Syrup:</div>
-            <div className={styles.syrupBtnRow}>
+            <div className={styles.syrupBtnRow} style={{ flexDirection: 'row', flexWrap: 'nowrap', overflowX: 'auto', justifyContent: 'center', gap: '1.5em' }}>
               {syrupOptions.map(opt => (
                 <button
                   key={opt}
@@ -198,8 +202,10 @@ function TimestampPage({ timestampGrid, onTimestampClick, onBack, selectedTimest
       <div className={styles.orderCard}>
         <div className={styles.orderCardHeader}>
           <div className={styles.orderCardTitle}>Choose a Time Slot</div>
+          <div className={styles.orderCardSubheading}>Please make a selection below</div>
         </div>
         <div className={styles.orderCardBody}>
+          {/* Removed orderCardQuestion caption as requested */}
           <table className="timestamp-grid" style={{margin: '0 auto', borderCollapse: 'collapse'}}>
             <tbody>
               {timestampGrid.map((row, rowIdx) => (

@@ -96,20 +96,27 @@
   border-radius: 2em;
   border: 4px solid #4d2c0c;
   box-shadow: 0 2px 16px #e0cfa0;
-  max-width: 600px;
-  width: 95vw;
+  max-width: 900px;
+  min-width: 340px;
+  width: min(98vw, max-content);
   margin: 2em auto;
-  padding: 0;
+  padding: 0 2.5em;
   overflow: hidden;
+  box-sizing: border-box;
+  transition: max-width 0.2s, width 0.2s;
 }
 
 /* Wider card for milk/syrup step */
 .orderCard.wide {
-  max-width: 1100px;
+  max-width: 1200px;
+  min-width: 400px;
   min-height: 650px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  width: fit-content;
+  padding-left: 3em;
+  padding-right: 3em;
 }
 .syrupRow .orderCardCoffeeBtn {
   padding-left: 0.7em;
@@ -123,6 +130,12 @@
   padding: 1.2em 2em 0.5em 2em;
   border-radius: 2em 2em 0 0;
   text-align: center;
+  width: calc(100% + 5em);
+  margin-left: -2.5em;
+  margin-right: -2.5em;
+  box-sizing: border-box;
+  z-index: 2;
+  position: static;
 }
 .orderCardTitle {
   font-size: 2.5em;
@@ -136,28 +149,37 @@
   font-weight: 600;
   margin-bottom: 0.2em;
 }
-.orderCardBody {
+/* Only one .orderCard definition, with position: relative for absolute header */
+.orderCard {
   background: #fff;
-  padding: 2.2em 2em 2.5em 2em;
-  text-align: center;
-  flex: 1 1 auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  border-radius: 2em;
+  border: 4px solid #4d2c0c;
+  box-shadow: 0 2px 16px #e0cfa0;
+  max-width: 900px;
+  min-width: 340px;
+  width: min(98vw, max-content);
+  margin: 2em auto;
+  padding: 0 2.5em;
+  overflow: hidden;
+  box-sizing: border-box;
+  transition: max-width 0.2s, width 0.2s;
+  position: relative;
 }
 
-.syrupBtnRow {
-  display: flex;
-  flex-direction: row;
-  gap: 1.5em;
-  justify-content: center;
-  margin-bottom: 2em;
-}
 .orderCardQuestion {
-  font-size: 1.5em;
+  font-size: 1.25em;
   font-weight: 700;
-  color: #3b2c1a;
+  color: #b89a6a;
   margin-bottom: 1.2em;
+  margin-top: 0.7em;
+}
+
+.orderCardSubheading {
+  font-size: 1.1em;
+  font-weight: 600;
+  color: #b89a6a;
+  margin-bottom: 0.5em;
+  margin-top: 0.7em;
 }
 .orderCardBtnRow {
   display: flex;
@@ -204,6 +226,17 @@
 
 /* Special alignment for N/A syrup button */
 .syrupBtnRow .orderCardCoffeeBtn:first-child {
+}
+
+.syrupBtnRow {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 1.5em;
+  justify-content: center;
+  margin-bottom: 2em;
+  width: 100%;
+  box-sizing: border-box;
   min-width: 140px;
   min-height: 200px;
   display: flex;
